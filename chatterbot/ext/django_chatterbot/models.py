@@ -1,9 +1,10 @@
 from django.db import models
+from .managers import StatementManager
 
 
 class Statement(models.Model):
     """
-    A short (<255) chat message, tweet, forum post, etc.
+    A short (<255) character message that is part of a dialog.
     """
 
     text = models.CharField(
@@ -15,12 +16,18 @@ class Statement(models.Model):
 
     extra_data = models.CharField(max_length=500)
 
+    objects = StatementManager()
+
     def __str__(self):
         if len(self.text.strip()) > 60:
             return '{}...'.format(self.text[:57])
         elif len(self.text.strip()) > 0:
             return self.text
         return '<empty>'
+
+    @property
+    def in_response_to(self):
+        return Response.objects.filter(statement=self)
 
 
 class Response(models.Model):
@@ -37,7 +44,7 @@ class Response(models.Model):
 
     statement = models.ForeignKey(
         'Statement',
-        related_name='in_response_to'
+        related_name='in_response'
     )
 
     response = models.ForeignKey(
@@ -49,8 +56,10 @@ class Response(models.Model):
 
     occurrence = models.PositiveIntegerField(default=0)
 
+    objects = StatementManager()
+
     def __str__(self):
-        s = self.statement.text if len(self.statement.text) <= 20 else self.statement.text[:17] + '...'
-        s += ' => '
-        s += self.response.text if len(self.response.text) <= 40 else self.response.text[:37] + '...'
-        return s
+        return '{} => {}'.format(
+            self.statement.text if len(self.statement.text) <= 20 else self.statement.text[:17] + '...',
+            self.response.text if len(self.response.text) <= 40 else self.response.text[:37] + '...'
+        )
