@@ -10,9 +10,10 @@ os:
   - windows
 
 env:
-  - DJANGO_VERSION=1.8
-  - DJANGO_VERSION=1.9
-  - DJANGO_VERSION=1.10
+  matrix:
+    - DJANGO_VERSION=1.8
+    - DJANGO_VERSION=1.9
+    - DJANGO_VERSION=1.10
 
 install:
   - pip install .
@@ -28,6 +29,7 @@ services:
   - mongodb
 
 script:
+  - python examples/django_app/manage.py migrate --no-input
   - python examples/django_app/manage.py test examples/django_app/
   - nosetests --with-coverage --cover-package=chatterbot
   - python tests/benchmarks.py
