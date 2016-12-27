@@ -9,60 +9,44 @@
             "Hello"
         ],
         [
+            "hello",
+            "Hi"
+        ],
+        [
+            "hi",
+            "Hi"
+        ],
+        [
             "Greetings!",
             "Hello"
         ],
         [
-            "Hello",
-            "Greetings!"
+            "Hi, How is it going",
+            "The going's good :-)"
         ],
         [
-            "Hi, How is it going?",
-            "Good"
-        ],
-        [
-            "Hi, How is it going?",
-            "Fine"
-        ],
-        [
-            "Hi, How is it going?",
-            "Okay"
-        ],
-        [
-            "Hi, How is it going?",
-            "Great"
-        ],
-        [
-            "Hi, How is it going?",
-            "Could be better."
-        ],
-        [
-            "Hi, How is it going?",
-            "Not so great."
-        ],
-        [
-            "How are you doing?",
-            "Good."
+            "How are you doing",
+            "I'm doing Good. Thanks for asking."
         ],
         [
             "How are you doing?",
             "Very well, thanks."
         ],
         [
-            "How are you doing?",
-            "Fine, and you?"
+            "how are you doing",
+            "I'm doing fine, and you?"
         ],
         [
-            "Nice to meet you.",
-            "Thank you."
+            "Nice to meet you",
+            "Nice to meet you too"
         ],
         [
             "How do you do?",
             "I'm doing well."
         ],
         [
-            "How do you do?",
-            "I'm doing well. How are you?"
+            "How do you do",
+            "I'm doing well."
         ],
         [
             "Hi, nice to meet you.",
@@ -73,32 +57,40 @@
             "Thank you. You too."
         ],
         [
-            "Top of the morning to you!",
-            "Thank you kindly."
-        ],
-        [
-            "Top of the morning to you!",
-            "And the rest of the day to you."
-        ],
-        [
             "What's up?",
             "Not much."
         ],
         [
-            "What's up?",
-            "Not too much."
+            "What's up",
+            "Nothing much. And you?"
         ],
         [
-            "What's up?",
-            "Not much, how about you?"
-        ],
-        [
-            "What's up?",
-            "Nothing much."
+            "Wassup",
+            "Not much, Wassup with you?"
         ],
         [
             "What's up?",
             "The sky's up but I'm fine thanks. What about you?"
+        ],
+        [
+            "Wazzup",
+            "Nothing much. Wassup with you?"
+        ],
+        [
+            "Wazzaa",
+            "What's up with you"
+        ],
+        [
+            "Good Morning",
+            "A very Good Morning to you too"
+        ],
+        [
+            "Good Afternoon",
+            "Good Afternoon to you too"
+        ],
+        [
+            "Good Evening",
+            "Good Evening to you too"
         ]
     ]
 }
