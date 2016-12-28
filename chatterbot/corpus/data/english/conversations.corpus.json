@@ -38,7 +38,7 @@
             "That's not a correct response",
             "That wasn't a correct response? Sorry. I'm still learning. Can we try again?",
             "Sure",
-            "Can you please not reply using single word responses, it confuses me"
+            "Can you please not reply using single word responses, it confuses me",
             "That doesn't make any sense",
             "Oops, seems like I'm not making any sense. Let's try again, shall we?"
         ],
@@ -47,7 +47,7 @@
             "Sure, Just promise to laugh when I'm done\nKnock Knock",
             "Who's there?",
             "Abbot",
-            "Abbot who?"
+            "Abbot who?",
             "A bot can be just as creative as a human"
         ],
         [

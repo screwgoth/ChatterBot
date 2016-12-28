@@ -8,5 +8,6 @@ from .multi_adapter import MultiLogicAdapter
 from .no_knowledge_adapter import NoKnowledgeAdapter
 from .specific_response import SpecificResponseAdapter
 from .time_adapter import TimeLogicAdapter
+from .devops_tasks import DevOpsTasks
 
 BaseMatchAdapter = BestMatch

@@ -1,0 +1,17 @@
+{
+    "tasks" : [
+        "create",
+        "show",
+        "list",
+        "count",
+        "start",
+        "pause",
+        "stop",
+        "terminate"
+    ],
+    "clouds" : [
+        "aws",
+        "vmware",
+        "openstack"
+    ]
+}
