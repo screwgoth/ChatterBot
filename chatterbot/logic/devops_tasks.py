@@ -22,7 +22,7 @@ class DevOpsTasks(LogicAdapter):
         #super(DevOpsTasks, self).__init__(self,**kwargs)
         language = kwargs.get('devops_words_language', 'english')
         self.devops_words = self.get_language_data(language)
-        print self.devops_words
+        #print self.devops_words
         self.cache = {}
 
         self.AWS_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY")
@@ -51,15 +51,15 @@ class DevOpsTasks(LogicAdapter):
         except IOError:
             raise self.UnrecognizedLanguageException(
                 'A devops_words data file was not found for `{}` at `{}`.'.format(
-                    language, math_words_data_file_path
+                    language, devops_words_data_file_path
                 )
             )
 
-    # def can_process(self, statement):
-    #     """
-    #     Determines whether it is appropriate for this
-    #     adapter to respond to the user input.
-    #     """
+    def can_process(self, statement):
+        """
+        Determines whether it is appropriate for this
+        adapter to respond to the user input.
+        """
         confidence, response = self.process(statement)
         self.cache[statement.text] = (confidence, response)
         return confidence == 1
@@ -77,41 +77,41 @@ class DevOpsTasks(LogicAdapter):
             return cached_result
 
         response = ''
+        got_cloud = ''
+        got_task = ''
         print input_text
         for cloud in input_text.split():
-            if cloud in self.devops_words['clouds']:
-                response = "DevOps Cloud successfully executed"
-                print "Got Cloud: {}".format(cloud)
+            if cloud.lower() in self.devops_words['clouds']:
                 got_cloud = 1
                 break
-            else:
-                got_cloud = 0
-                response = "Sorry, but you have not specified which Cloud to use : {}".format(cloud)
+            # else:
+            #     got_cloud = 0
+            #     response = "Sorry, but you have not specified which Cloud to use : {}".format(cloud)
 
-        if not got_cloud: return got_cloud, Statement(response)
-        got_task = 0
+        # if not got_cloud: return got_cloud, Statement(response)
+        # got_task = 0
         if got_cloud:
             for task in input_text.split():
-                if task in self.devops_words['tasks']:
+                if task.lower() in self.devops_words['tasks']:
                     got_task = 1
-                    print "DevOps Task to \"{}\" VM on \"{}\" successfully executed".format(task, cloud)
+                    #print "DevOps Task to \"{}\" VM on \"{}\" successfully executed".format(task, cloud)
                     break
 
-
-
         if got_task:
-            print "Creating function"
-            func = cloud + "_" + task
+            func = cloud.lower() + "_" + task.lower()
             print func
             confidence = 0
-            confidence, response = getattr(self, func)()
+            confidence, response = getattr(self, func)(input_text)
             return confidence, Statement(response)
         else:
-            response = "DevOps Task could not be executed"
+            response = "I cannot understand what DevOps task you want me to do. Can you try again please?"
             return got_task, Statement(response)
 
 
-    def aws_count(self):
+    def aws_count(self, input_text):
+        """
+        Get the number of running EC2 instances on AWS
+        """
         print "Counting AWS VMs"
         count = 0
         for reservation in self.aws_reservations:
@@ -127,8 +127,8 @@ class DevOpsTasks(LogicAdapter):
         response = "Number of AWS instances are : {}".format(count)
         return 1, response
 
-    def aws_list(self):
-        listofVMs = []
+    def ec2_instance_list(self):
+        listofInstances = []
         for reservation in self.aws_reservations:
             instances = reservation.instances
 
@@ -138,7 +138,33 @@ class DevOpsTasks(LogicAdapter):
                     instanceName = 'Default'
                     if 'Name' in tags:
                         instanceName = tags['Name']
-                        listofVMs.append(instanceName)
+                        #listofInstances.append(instanceName.lower())
+                        listofInstances.append(instanceName)
+        return listofInstances
+
+
+    def aws_list(self, input_text):
+        """
+        Get the list of EC2 instances on AWS
+        """
+        listofVMs = self.ec2_instance_list()
         vmlist = "\n".join(listofVMs)
         response = "List of VMs on AWS is: \n%s" %(vmlist)
+        return 1, response
+
+    def aws_stop(self, input_text):
+        """
+        Stop the specified EC2 instance
+        """
+        response = "Did not find the EC2 instance to stop"
+        listofVMs = self.ec2_instance_list()
+        print listofVMs
+
+        chunks = re.split(r"([\w\.-]+|[\(\)\*\+])", input_text)
+        chunks = [chunk.strip() for chunk in chunks]
+        chunks = [chunk for chunk in chunks if chunk in listofVMs]
+        if chunks[0]:
+            #self.aws_conn.stop_instances(instance_ids=[chunks[0]])
+            response = "Stopping {}".format(chunks[0])
+
         return 1, response
