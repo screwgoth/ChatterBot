@@ -4,14 +4,19 @@
         "show",
         "list",
         "count",
+        "many",
         "start",
         "pause",
         "stop",
+        "kill",
+        "reboot",
+        "restart",
         "terminate"
     ],
     "clouds" : [
         "aws",
         "vmware",
+        "vsphere",
         "openstack"
     ]
 }
