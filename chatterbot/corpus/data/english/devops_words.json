@@ -11,7 +11,8 @@
         "kill",
         "reboot",
         "restart",
-        "terminate"
+        "terminate",
+        "test"
     ],
     "clouds" : [
         "aws",
